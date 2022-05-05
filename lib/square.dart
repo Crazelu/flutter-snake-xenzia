@@ -16,6 +16,11 @@ class Square {
       piece: piece ?? this.piece,
     );
   }
+
+  @override
+  String toString() {
+    return "Square(x:$x, y:$y, piece:$piece)";
+  }
 }
 
 enum Piece { food, body, none }

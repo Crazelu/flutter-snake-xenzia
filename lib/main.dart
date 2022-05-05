@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snake_xenzia/board_view.dart';
+import 'package:snake_xenzia/board_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const BoardView(),
+      home: BoardView(viewModel: BoardViewModel()),
     );
   }
 }

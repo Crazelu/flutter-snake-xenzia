@@ -22,7 +22,7 @@ class _BoardViewState extends State<BoardView> {
 
   late Square _food;
 
-  late final List<Square> _body = [
+  late List<Square> _body = [
     Square(
       x: _x,
       y: _y,
@@ -40,6 +40,13 @@ class _BoardViewState extends State<BoardView> {
     _y = 11;
     _direction = Direction.up;
     _gameOver = false;
+    _body = [
+      Square(
+        x: _x,
+        y: _y,
+        piece: Piece.body,
+      ),
+    ];
     play();
   }
 
@@ -61,7 +68,7 @@ class _BoardViewState extends State<BoardView> {
           piece: Piece.body,
         );
         _body.add(newTail);
-        _squares[_tail.x][_tail.y - 1] = newTail;
+        // _squares[_tail.x][_tail.y - 1] = newTail;
         break;
       case Direction.left:
         final newTail = Square(
@@ -94,6 +101,7 @@ class _BoardViewState extends State<BoardView> {
         break;
       default:
     }
+    print(_body);
   }
 
   void checkIfFoodHasBeenEaten() {
@@ -126,16 +134,16 @@ class _BoardViewState extends State<BoardView> {
             y: block.y,
             piece: Piece.none,
           );
-          _body[i] = _squares[block.x - 1][block.y] = Square(
-            x: block.x - 1,
+          _body[i] = _squares[_x + 1][block.y] = Square(
+            x: _x + 1,
             y: block.y,
             piece: Piece.body,
           );
         }
       } else if (block.y > _body.first.y) {
-        moveLeft(i);
-      } else {
         moveRight(i);
+      } else {
+        moveLeft(i);
       }
     }
 
@@ -166,16 +174,16 @@ class _BoardViewState extends State<BoardView> {
             y: block.y,
             piece: Piece.none,
           );
-          _body[i] = _squares[block.x + 1][block.y] = Square(
-            x: block.x + 1,
+          _body[i] = _squares[_x - i][block.y] = Square(
+            x: _x - i,
             y: block.y,
             piece: Piece.body,
           );
         }
       } else if (block.y > _body.first.y) {
-        moveLeft(i);
-      } else {
         moveRight(i);
+      } else {
+        moveLeft(i);
       }
     }
     _squares[oldTail.x][oldTail.y] = oldTail.copyWith(piece: Piece.none);
@@ -183,6 +191,46 @@ class _BoardViewState extends State<BoardView> {
   }
 
   void moveLeft([int startIndex = 0]) {
+    if (startIndex == 0) _y--;
+    final oldTail = _body.last;
+    for (int i = startIndex; i < _body.length; i++) {
+      final block = _body[i];
+      if (block.x == _body.first.x) {
+        if (startIndex == 0 && i == 0) {
+          _squares[block.x][_y + 1] = Square(
+            x: block.x,
+            y: _y + 1,
+            piece: Piece.none,
+          );
+          _body[i] = _squares[block.x][_y] = Square(
+            x: block.x,
+            y: _y,
+            piece: Piece.body,
+          );
+        } else {
+          _squares[block.x][block.y] = Square(
+            x: block.x,
+            y: block.y,
+            piece: Piece.none,
+          );
+          _body[i] = _squares[block.x][_y + 1] = Square(
+            x: block.x,
+            y: _y + 1,
+            piece: Piece.body,
+          );
+        }
+      } else if (block.x > _body.first.x) {
+        moveUp(i);
+      } else {
+        moveDown(i);
+      }
+    }
+
+    _squares[oldTail.x][oldTail.y] = oldTail.copyWith(piece: Piece.none);
+    setState(() {});
+  }
+
+  void moveRight([int startIndex = 0]) {
     if (startIndex == 0) _y++;
     final oldTail = _body.last;
     for (int i = startIndex; i < _body.length; i++) {
@@ -205,49 +253,9 @@ class _BoardViewState extends State<BoardView> {
             y: block.y,
             piece: Piece.none,
           );
-          _body[i] = _squares[block.x][block.y - 1] = Square(
+          _body[i] = _squares[block.x][_y - 1] = Square(
             x: block.x,
-            y: block.y - 1,
-            piece: Piece.body,
-          );
-        }
-      } else if (block.x > _body.first.x) {
-        moveUp(i);
-      } else {
-        moveDown(i);
-      }
-    }
-
-    _squares[oldTail.x][oldTail.y] = oldTail.copyWith(piece: Piece.none);
-    setState(() {});
-  }
-
-  void moveRight([int startIndex = 0]) {
-    if (startIndex == 0) _y--;
-    final oldTail = _body.last;
-    for (int i = startIndex; i < _body.length; i++) {
-      final block = _body[i];
-      if (block.x == _body.first.x) {
-        if (startIndex == 0) {
-          _squares[block.x][_y + 1] = Square(
-            x: block.x,
-            y: _y + 1,
-            piece: Piece.none,
-          );
-          _body[i] = _squares[block.x][_y] = Square(
-            x: block.x,
-            y: _y,
-            piece: Piece.body,
-          );
-        } else {
-          _squares[block.x][block.y] = Square(
-            x: block.x,
-            y: block.y,
-            piece: Piece.none,
-          );
-          _body[i] = _squares[block.x][block.y + 1] = Square(
-            x: block.x,
-            y: block.y + 1,
+            y: _y - 1,
             piece: Piece.body,
           );
         }
@@ -288,9 +296,9 @@ class _BoardViewState extends State<BoardView> {
   void onHorizontalDrag(double? velocity) {
     if (_direction == Direction.left || _direction == Direction.right) return;
     if ((velocity ?? 0) > 0) {
-      _direction = Direction.left;
-    } else if ((velocity ?? 0) < 0) {
       _direction = Direction.right;
+    } else if ((velocity ?? 0) < 0) {
+      _direction = Direction.left;
     }
     _duration = 0;
 

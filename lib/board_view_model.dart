@@ -58,7 +58,6 @@ class BoardViewModel extends ChangeNotifier {
         _x = _body.first.x;
         _y = 0;
         break;
-      default:
     }
     notifyListeners();
   }
@@ -91,10 +90,10 @@ class BoardViewModel extends ChangeNotifier {
   void grow() {
     final tail = _body.last;
     final head = _body.first;
+    late int newX;
+    late int newY;
     switch (_direction) {
       case Direction.right:
-        late int newX;
-        late int newY;
         if (head.x == tail.x) {
           newX = tail.x;
           newY = tail.y - 1;
@@ -105,17 +104,8 @@ class BoardViewModel extends ChangeNotifier {
           newX = tail.x + 1;
           newY = tail.y;
         }
-        final newTail = Square(
-          x: newX,
-          y: newY,
-          piece: Piece.body,
-        );
-        _body.add(newTail);
-        _squares[newX][newY] = newTail;
         break;
       case Direction.left:
-        late int newX;
-        late int newY;
         if (head.x == tail.x) {
           newX = tail.x;
           newY = tail.y + 1;
@@ -126,17 +116,8 @@ class BoardViewModel extends ChangeNotifier {
           newX = tail.x + 1;
           newY = tail.y;
         }
-        final newTail = Square(
-          x: newX,
-          y: newY,
-          piece: Piece.body,
-        );
-        _body.add(newTail);
-        _squares[newX][newY] = newTail;
         break;
       case Direction.up:
-        late int newX;
-        late int newY;
         if (head.y == tail.y) {
           newX = tail.x + 1;
           newY = tail.y;
@@ -147,17 +128,8 @@ class BoardViewModel extends ChangeNotifier {
           newX = tail.x;
           newY = tail.y + 1;
         }
-        final newTail = Square(
-          x: newX,
-          y: newY,
-          piece: Piece.body,
-        );
-        _body.add(newTail);
-        _squares[newX][newY] = newTail;
         break;
       case Direction.down:
-        late int newX;
-        late int newY;
         if (head.y == tail.y) {
           newX = tail.x - 1;
           newY = tail.y;
@@ -168,16 +140,16 @@ class BoardViewModel extends ChangeNotifier {
           newX = tail.x;
           newY = tail.y + 1;
         }
-        final newTail = Square(
-          x: newX,
-          y: newY,
-          piece: Piece.body,
-        );
-        _body.add(newTail);
-        _squares[newX][newY] = newTail;
         break;
-      default:
     }
+
+    final newTail = Square(
+      x: newX,
+      y: newY,
+      piece: Piece.body,
+    );
+    _body.add(newTail);
+    _squares[newX][newY] = newTail;
   }
 
   void checkIfFoodHasBeenEaten() {
@@ -385,7 +357,6 @@ class BoardViewModel extends ChangeNotifier {
       case Direction.down:
         moveDown();
         break;
-      default:
     }
 
     _duration = __duration;

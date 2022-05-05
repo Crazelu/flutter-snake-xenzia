@@ -10,6 +10,7 @@ class BoardViewModel extends ChangeNotifier {
     play();
   }
   static const __duration = 200;
+  static const __point = 10;
 
   late List<List<Square>> _squares = SizeUtil.generateSquares();
   List<List<Square>> get squares => _squares;
@@ -32,6 +33,9 @@ class BoardViewModel extends ChangeNotifier {
 
   bool _gameOver = false;
   bool get isGameOver => _gameOver;
+
+  int _gamePoints = 0;
+  int get gamePoints => _gamePoints;
 
   ///TODO
   ///Currently not functional because movement logic relies on global
@@ -65,6 +69,7 @@ class BoardViewModel extends ChangeNotifier {
     _y = _squares.first.length ~/ 2;
     _direction = Direction.up;
     _gameOver = false;
+    _gamePoints = 0;
     _body = [
       Square(
         x: _x,
@@ -177,6 +182,7 @@ class BoardViewModel extends ChangeNotifier {
 
   void checkIfFoodHasBeenEaten() {
     if (_body.first.x == _food.x && _body.first.y == _food.y) {
+      _gamePoints += __point;
       grow();
       spunFood();
     }

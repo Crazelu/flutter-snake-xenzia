@@ -14,6 +14,22 @@ class BoardView extends StatelessWidget {
       builder: (context) => Scaffold(
         appBar: AppBar(
           title: const Text("Snake Xenzia"),
+          centerTitle: false,
+          actions: [
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Text(
+                  "${viewModel.gamePoints} points",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      ?.copyWith(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
         body: viewModel.isGameOver
             ? Center(

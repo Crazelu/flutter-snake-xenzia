@@ -68,7 +68,7 @@ class _BoardViewState extends State<BoardView> {
           piece: Piece.body,
         );
         _body.add(newTail);
-        // _squares[_tail.x][_tail.y - 1] = newTail;
+        _squares[_tail.x][_tail.y - 1] = newTail;
         break;
       case Direction.left:
         final newTail = Square(
@@ -81,16 +81,6 @@ class _BoardViewState extends State<BoardView> {
         break;
       case Direction.up:
         final newTail = Square(
-          x: _tail.x - 1,
-          y: _tail.y,
-          piece: Piece.body,
-        );
-        _body.add(newTail);
-        _squares[_tail.x - 1][_tail.y] = newTail;
-
-        break;
-      case Direction.down:
-        final newTail = Square(
           x: _tail.x + 1,
           y: _tail.y,
           piece: Piece.body,
@@ -99,9 +89,18 @@ class _BoardViewState extends State<BoardView> {
         _squares[_tail.x + 1][_tail.y] = newTail;
 
         break;
+      case Direction.down:
+        final newTail = Square(
+          x: _tail.x - 1,
+          y: _tail.y,
+          piece: Piece.body,
+        );
+        _body.add(newTail);
+        _squares[_tail.x - 1][_tail.y] = newTail;
+
+        break;
       default:
     }
-    print(_body);
   }
 
   void checkIfFoodHasBeenEaten() {

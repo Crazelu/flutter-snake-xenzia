@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:developer' show log;
 
 import 'package:flutter/material.dart';
 import 'package:snake_xenzia/square.dart';
@@ -28,6 +29,7 @@ class SizeUtil {
       result.add(inner);
     }
 
+    // log("$result");
     return result;
   }
 }

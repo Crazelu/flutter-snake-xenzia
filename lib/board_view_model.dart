@@ -9,7 +9,7 @@ class BoardViewModel extends ChangeNotifier {
   BoardViewModel() {
     play();
   }
-  static const __duration = 200;
+
   static const __point = 10;
 
   late List<List<Square>> _squares = SizeUtil.generateSquares();
@@ -19,7 +19,7 @@ class BoardViewModel extends ChangeNotifier {
 
   late int _x = _squares.length ~/ 2;
   late int _y = _squares.first.length ~/ 2;
-  int _duration = __duration;
+
   int _xVel = 0;
   int _yVel = 0;
   int _snakeLength = 3;
@@ -141,7 +141,6 @@ class BoardViewModel extends ChangeNotifier {
       _xVel = 0;
       _yVel = -1;
     }
-    _duration = 0;
 
     notifyListeners();
   }

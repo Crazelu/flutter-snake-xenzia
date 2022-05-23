@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'dart:developer' show log;
 
 import 'package:flutter/material.dart';
+import 'package:snake_xenzia/settings.dart';
 import 'package:snake_xenzia/square.dart';
 
 class SizeUtil {
@@ -16,8 +17,8 @@ class SizeUtil {
   static List<List<Square>> generateSquares() {
     List<List<Square>> result = [];
 
-    double height = 20;
-    double width = 20;
+    double height = GameSettings.bodySize;
+    double width = GameSettings.bodySize;
 
     int rowItems = deviceWidth ~/ width;
 

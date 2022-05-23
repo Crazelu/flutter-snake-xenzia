@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snake_xenzia/settings.dart';
 import 'package:snake_xenzia/square.dart';
 
 class SquareWidget extends StatelessWidget {
@@ -11,8 +12,8 @@ class SquareWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 20,
-      width: 20,
+      height: GameSettings.bodySize,
+      width: GameSettings.bodySize,
       decoration: BoxDecoration(
         color: square.piece == Piece.body
             ? Colors.blue

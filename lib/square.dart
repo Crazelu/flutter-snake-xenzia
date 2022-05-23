@@ -23,4 +23,4 @@ class Square {
   }
 }
 
-enum Piece { food, body, none }
+enum Piece { food, body, obstacle, none }

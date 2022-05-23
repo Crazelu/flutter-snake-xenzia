@@ -1,3 +1,3 @@
 class GameSettings {
-  static const bodySize = 15.0;
+  static const bodySize = 12.0;
 }

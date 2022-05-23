@@ -19,10 +19,23 @@ class SquareWidget extends StatelessWidget {
             ? Colors.blue
             : square.piece == Piece.food
                 ? Colors.red
-                : Colors.transparent,
+                : square.piece == Piece.obstacle
+                    ? Colors.grey[700]
+                    : Colors.transparent,
         shape:
             square.piece == Piece.food ? BoxShape.circle : BoxShape.rectangle,
       ),
+      child: square.piece == Piece.obstacle
+          ? const Center(
+              child: Text(
+                "|",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          : null,
     );
   }
 }
